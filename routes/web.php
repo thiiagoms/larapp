@@ -1,11 +1,13 @@
- <?php
+<?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\EpisodesController;
-use App\Http\Controllers\SeasonsController;
-use App\Http\Controllers\SeriesController;
-use App\Http\Controllers\UserController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\{
+    AuthController,
+    EpisodesController,
+    SeasonsController,
+    SeriesController,
+    UserController
+};
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () {
+    return redirect()->route('index');
+});
 
 Route::prefix('series')->group(function () {
 
@@ -32,16 +37,17 @@ Route::prefix('series')->group(function () {
     Route::prefix('season')->group(function () {
 
         Route::get('{season}/episodes', [EpisodesController::class, 'index'])->name('episodes_by_seasons');
-        Route::post('{season}/episodes/watch', [EpisodesController::class, 'watch'])->name('watch_episodes');
+        
+        Route::post('{season}/episodes/watch', [EpisodesController::class, 'watch'])
+            ->name('watch_episodes')
+            ->middleware('auth');
     });
 });
 
-Route::get('/', [AuthController::class, 'index'])->name('login');
+Route::get('login', [AuthController::class, 'index'])->name('login');
 Route::post('auth-user', [AuthController::class, 'auth'])->name('auth_user');
 
 Route::get('create-user', [UserController::class, 'create'])->name('create_user');
 Route::post('create-user', [UserController::class, 'store']);
 
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -29,6 +29,11 @@ class SeriesFormRequest extends FormRequest
         ];
     }
 
+    /**
+     * Message rules
+     * 
+     * @return array
+     */
     public function messages(): array
     {
         return [

@@ -18,7 +18,6 @@ class SeriesController extends Controller
     public function __construct(SeriesService $seriesService)
     {
         $this->seriesService = $seriesService;
-        $this->middleware('auth');
     }
 
     /**
