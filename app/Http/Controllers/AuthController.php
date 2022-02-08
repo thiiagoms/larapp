@@ -29,7 +29,8 @@ class AuthController extends Controller
         $user = Auth::attempt($request->only('email', 'password'));
 
         if (!$user) {
-            return redirect()->back()->withErrors('User or passwords are incorrect');
+            return redirect()->back()
+                ->withErrors('User or passwords are incorrect');
         }
 
         return redirect()->route('index');
@@ -44,6 +45,6 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return redirect()->route('login');
+        return redirect()->route('index');
     }
 }

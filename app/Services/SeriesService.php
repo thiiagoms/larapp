@@ -38,8 +38,12 @@ class SeriesService
      * @param integer $epsBySeason
      * @return Series
      */
-    public function createSerie(string $name, string $description, int $seasonsQuantity, int $epsBySeason): Series
-    {
+    public function createSerie(
+        string $name,
+        string $description,
+        int $seasonsQuantity,
+        int $epsBySeason
+    ): Series {
         DB::beginTransaction();
 
         $serie = Series::create(['name' => $name, 'description' => $description]);

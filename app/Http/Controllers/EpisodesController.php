@@ -9,11 +9,6 @@ use Illuminate\Http\{Request, RedirectResponse};
 
 class EpisodesController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a list of episodes
      *
