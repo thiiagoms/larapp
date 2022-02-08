@@ -18,8 +18,9 @@
 
     <ul class="list-group">
         @foreach($series as $serie)
+
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <span id="series-name-{{ $serie->id }}">{{ $serie->name }}</span>
+                <h5 id="series-name-{{ $serie->id }}">{{ $serie->name }}</h5>
 
                 <div class="input-group w-50" hidden id="input-series-name-{{ $serie->id }}">
                     <input type="text" class="form-control" value="{{ $serie->name }}">
@@ -30,26 +31,56 @@
                         @csrf
                     </div>
                 </div>
+                
+                <div class="modal fade" id="serie{{ $serie->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">{{ $serie->name }}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {{ $serie->description }}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <span class="d-flex">
-            <button class="btn btn-info btn-sm me-1" onclick="toggleInput({{ $serie->id }})">
-                <i class="fas fa-edit"></i>
-            </button>
+                    <a class="btn btn-info btn-sm me-1" data-bs-toggle="modal" data-bs-target="#serie{{ $serie->id }}" role="button"
+                        aria-expanded="false" aria-controls="serie{{ $serie->id }}"
+                    >
+                        <i class="fas fa-comment-dots"></i>
+                    </a>
+        
+                    @auth
+                        <a href="{{ route('seasons', ['id' => $serie->id]) }}" class="btn btn-info btn-sm me-1">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    @endauth
 
-            <a href="{{ route('seasons', ['id' => $serie->id]) }}" class="btn btn-info btn-sm me-1">
-                <i class="fas fa-external-link-alt"></i>
-            </a>
+                    @auth
+                        <button class="btn btn-info btn-sm me-1" onclick="toggleInput({{ $serie->id }})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                    @endauth
 
-            <form method="post" action="{{ route('delete', ['id' => $serie->id]) }}"
-                  onsubmit="return confirm('Are you sure to remove {{ addslashes($serie->name) }}?')">
-                @csrf
-                @method('DELETE')
-                <button class="btn btn-danger btn-sm">
-                    <i class="far fa-trash-alt"></i>
-                </button>
-            </form>
-        </span>
+                    @auth
+                        <form method="post" action="{{ route('delete', ['id' => $serie->id]) }}"
+                            onsubmit="return confirm('Are you sure to remove {{ addslashes($serie->name) }}?')">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-danger btn-sm">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    @endauth
+                </span>
             </li>
+
         @endforeach
     </ul>
 
