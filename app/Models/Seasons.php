@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
 
 class Seasons extends Model
 {
@@ -10,17 +11,20 @@ class Seasons extends Model
 
     protected $fillable = ['seasons_quantity'];
 
-    public function series()
+    /** @return BelongsTo */
+    public function series(): BelongsTo
     {
         return $this->belongsTo(Series::class);
     }
 
-    public function episodes()
+    /** @return HasMany */
+    public function episodes(): HasMany
     {
         return $this->hasMany(Episodes::class);
     }
 
-    public function watchedEpisodes()
+    /** @return bool */
+    public function watchedEpisodes(): bool
     {
         return $this->episodes->filter(function (Episodes $episode) {
             return $episode->watched;
