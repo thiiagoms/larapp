@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Facades\{Auth, Hash};
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -30,7 +31,6 @@ class UserController extends Controller
         $data = $request->except('_token');
 
         $findUser = User::where('email', $data['email'])->first();
-
 
         if (!empty($findUser)) {
             return redirect()->back()->withErrors("E-mail already exists");

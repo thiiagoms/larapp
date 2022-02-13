@@ -16,7 +16,6 @@
 - Composer
 - MySQL
 - Npm
-
 ### Run
 
 1-) Clone the project

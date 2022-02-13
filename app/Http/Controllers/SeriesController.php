@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewSeriesEvent;
 use App\Http\Requests\SeriesFormRequest;
 use App\Models\Series;
 use App\Services\SeriesService;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\{RedirectResponse, Request};
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class SeriesController extends Controller
 {
@@ -59,6 +61,15 @@ class SeriesController extends Controller
             $request->seriesSeasons,
             $request->seriesEpisodes
         );
+
+        $seriesEvent = new NewSeriesEvent(
+            $request->seriesName,
+            $request->seriesDescription,
+            $request->seriesSeasons,
+            $request->seriesEpisodes
+        );
+
+        event($seriesEvent);
 
         $request->session()
             ->flash(

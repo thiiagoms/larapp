@@ -51,3 +51,21 @@ Route::get('create-user', [UserController::class, 'create'])->name('create_user'
 Route::post('create-user', [UserController::class, 'store']);
 
 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::get('serie-mail', function () {
+    return new \App\Mail\NewSeriesMail('Arrow',
+        'Green archer series', 19, 12);
+});
+
+Route::get('send-series-email', function () {
+
+    $mail = new \App\Mail\NewSeriesMail('Arrow', 'Green archer series', 19, 12);
+
+    $user = (object) ['email' => 'thiagoteste@gmail.com', 'name' => 'Thiago'];
+
+    $mail->subject = "New series registered";
+    
+    \Illuminate\Support\Facades\Mail::to($user)->send($mail);
+
+    return 'Send email';
+});

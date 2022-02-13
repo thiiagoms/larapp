@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\{BelongsTo, HasMany};
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Seasons extends Model
 {
@@ -23,8 +24,8 @@ class Seasons extends Model
         return $this->hasMany(Episodes::class);
     }
 
-    /** @return bool */
-    public function watchedEpisodes(): bool
+    /** @return object */
+    public function watchedEpisodes(): object
     {
         return $this->episodes->filter(function (Episodes $episode) {
             return $episode->watched;
