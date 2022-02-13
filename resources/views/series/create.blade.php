@@ -12,7 +12,7 @@
         <h1 class="display-5 fw-bold">Add new serie</h1>
     </div>
 
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         @csrf
         <div class="row mb-3">
             <label for="seriesName" class="col-sm-2 col-form-label">Name</label>
@@ -35,9 +35,17 @@
         <div class="row mb-3">
             <label for="seriesDescription" class="col-sm-2 col-form-label">Description</label>
             <div class="col-sm-10">
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="seriesDescription" placeholder="Series description"></textarea>
+                <textarea class="form-control" id="seriesDescription" rows="3" name="seriesDescription" placeholder="Series description"></textarea>
             </div>
         </div>
+
+        <div class="row mb-3">
+            <label for="seriesCover" class="col-sm-2 col-form-label">Cover</label>
+            <div class="col-sm-10">
+                <input type="file" class="form-control" id="seriesCover" rows="3" name="seriesCover"></textarea>
+            </div>
+        </div>
+
         <button type="submit" class="btn btn-primary">Add</button>
     </form>
 
