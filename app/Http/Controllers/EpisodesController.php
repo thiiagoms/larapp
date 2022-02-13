@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\{Seasons, Episodes};
+use App\Models\Seasons;
+use App\Models\Episodes;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\View\{Factory, View};
-use Illuminate\Http\{Request, RedirectResponse};
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\view;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class EpisodesController extends Controller
 {
@@ -36,13 +39,16 @@ class EpisodesController extends Controller
     {
         $watchEpisodes = $request->episodes;
 
-        $season->episodes->each(function (Episodes $episode) use ($watchEpisodes) {
-            $episode->watched = in_array($episode->id, $watchEpisodes);
-        });
+        $season->episodes->each(
+            function (Episodes $episode) use ($watchEpisodes) {
+                $episode->watched = in_array($episode->id, $watchEpisodes);
+            }
+        );
 
         $season->push();
 
-        $request->session()->flash('message', "Episodes was marked as watched");
+        $request->session()
+            ->flash('message', "Episodes was marked as watched");
 
         return redirect()->back();
     }

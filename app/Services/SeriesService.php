@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\{Series, Seasons, Episodes};
+use App\Models\Series;
+use App\Models\Seasons;
+use App\Models\Episodes;
 use Illuminate\Support\Facades\DB;
 
 class SeriesService
@@ -46,7 +48,10 @@ class SeriesService
     ): Series {
         DB::beginTransaction();
 
-        $serie = Series::create(['name' => $name, 'description' => $description]);
+        $serie = Series::create(
+            ['name' => $name, 'description' => $description]
+        );
+
         $this->createSeasons($seasonsQuantity, $epsBySeason, $serie);
 
         DB::commit();
@@ -62,10 +67,17 @@ class SeriesService
      * @param Series $serie
      * @return void
      */
-    private function createSeasons(int $seasonsQuantity, int $epsBySeason, Series $serie): void
-    {
+    private function createSeasons(
+        int $seasonsQuantity,
+        int $epsBySeason,
+        Series $serie
+    ): void {
+
         for ($seasons = 1; $seasons <= $seasonsQuantity; $seasons++) {
-            $season = $serie->seasons()->create(['seasons_quantity' => $seasons]);
+            $season = $serie->seasons()->create(
+                ['seasons_quantity' => $seasons]
+            );
+
             $this->createEpisodes($epsBySeason, $season);
         }
     }
