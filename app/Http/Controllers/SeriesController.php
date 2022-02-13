@@ -55,11 +55,18 @@ class SeriesController extends Controller
     public function store(SeriesFormRequest $request): RedirectResponse
     {
 
+        $cover = null;
+
+        if ($request->hasFile('seriesCover')) {
+            $cover = $request->file('seriesCover')->store('public/series');
+        }
+
         $serie = $this->seriesService->createSerie(
             $request->seriesName,
             $request->seriesDescription,
             $request->seriesSeasons,
-            $request->seriesEpisodes
+            $request->seriesEpisodes,
+            $cover
         );
 
         $seriesEvent = new NewSeriesEvent(

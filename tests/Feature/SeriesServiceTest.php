@@ -21,7 +21,8 @@ class SeriesServiceTest extends TestCase
         $seriesService = new SeriesService();
 
         $serieName = "Serie name test";
-        $this->serie = $seriesService->createSerie($serieName, "Test Description", 1, 1);
+        $this->serie = $seriesService
+            ->createSerie($serieName, "Test Description", 1, 1, null);
     }
 
     public function testCreateSeries()
@@ -29,11 +30,15 @@ class SeriesServiceTest extends TestCase
         $seriesService = new SeriesService();
 
         $serieName = "Serie name test";
-        $createdSerie = $seriesService->createSerie($serieName, "Test Description", 1, 1);
+        $createdSerie = $seriesService
+            ->createSerie($serieName, "Test Description", 1, 1, null);
 
         $this->assertInstanceOf(Series::class, $createdSerie);
         $this->assertDatabaseHas('series', ['name' => $serieName]);
-        $this->assertDatabaseHas('seasons', ['series_id' => $createdSerie->id, 'seasons_quantity' => 1]);
+        $this->assertDatabaseHas('seasons', [
+            'series_id' => $createdSerie->id,
+            'seasons_quantity' => 1
+        ]);
         $this->assertDatabaseHas('episodes', ['episodes_quantity' => 1]);
     }
 
