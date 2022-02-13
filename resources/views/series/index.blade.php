@@ -20,7 +20,11 @@
         @foreach($series as $serie)
 
             <li class="list-group-item d-flex justify-content-between align-items-center">
-                <h5 id="series-name-{{ $serie->id }}">{{ $serie->name }}</h5>
+
+                <div>
+                    <img src="{{ $serie->series_cover }}" class="img-thumbnail" height="100px" width="100px">
+                    <span id="series-name-{{ $serie->id }}">{{ $serie->name }}</span>
+                </div>
 
                 <div class="input-group w-50" hidden id="input-series-name-{{ $serie->id }}">
                     <input type="text" class="form-control" value="{{ $serie->name }}">
@@ -31,7 +35,7 @@
                         @csrf
                     </div>
                 </div>
-                
+
                 <div class="modal fade" id="serie{{ $serie->id }}" tabindex="-1" aria-labelledby="seriesTitle" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -55,7 +59,7 @@
                     >
                         <i class="fas fa-comment-dots"></i>
                     </a>
-        
+
                     @auth
                         <a href="{{ route('seasons', ['id' => $serie->id]) }}" class="btn btn-info btn-sm me-1">
                             <i class="fas fa-external-link-alt"></i>

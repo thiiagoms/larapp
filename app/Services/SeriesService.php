@@ -6,6 +6,7 @@ use App\Models\Series;
 use App\Models\Seasons;
 use App\Models\Episodes;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class SeriesService
 {
@@ -44,12 +45,14 @@ class SeriesService
         string $name,
         string $description,
         int $seasonsQuantity,
-        int $epsBySeason
+        int $epsBySeason,
+        ?string $cover
     ): Series {
+
         DB::beginTransaction();
 
         $serie = Series::create(
-            ['name' => $name, 'description' => $description]
+            ['name' => $name, 'description' => $description, 'cover' => $cover]
         );
 
         $this->createSeasons($seasonsQuantity, $epsBySeason, $serie);
@@ -111,6 +114,11 @@ class SeriesService
         $seriesName = $serie->name;
         $this->removeSeasons($serie);
         $serie->delete();
+
+        if ($serie->cover) {
+            Storage::delete($serie->cover);
+        }
+
         DB::commit();
 
         return $seriesName;
