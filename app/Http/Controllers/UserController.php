@@ -36,7 +36,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors("E-mail already exists");
         }
 
-        $user['password'] = Hash::make($data['password']);
+        $data['password'] = Hash::make($data['password']);
 
         $user = User::create($data);
 
