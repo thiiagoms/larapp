@@ -46,12 +46,17 @@ $ php artisan migrate
 $ php artisan db:seed
 ```
 
-7-) Run the project
+7 -) Link on storage
+```bash
+$ php artisan storage:link
+```
+
+8-) Run the project
 ```bash
 $ php artisan serve
 ```
 
-8-) You have two options to run tests:
+9-) You have two options to run tests:
 
 * First, with "vanilla" phpunit
 ```bash
