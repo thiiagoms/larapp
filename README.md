@@ -54,6 +54,7 @@ $ php artisan storage:link
 8-) Run the project
 ```bash
 $ php artisan serve
+$ php artisan queue:listen --tries=3
 ```
 
 9-) You have two options to run tests:
